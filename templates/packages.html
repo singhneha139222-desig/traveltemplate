@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+
+{% block title %}Packages - BromoRise{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="page-header-bg">
+        <div class="page-header-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="page-header-content">
+            <span class="breadcrumb">Home / Packages</span>
+            <h1 class="page-title">Travel Packages</h1>
+            <p class="page-desc">Choose from our carefully curated travel packages for the ultimate experience</p>
+        </div>
+    </div>
+</section>
+
+<!-- Packages Grid -->
+<section class="section packages-page">
+    <div class="container">
+        <div class="packages-grid-full">
+            {% for package in packages %}
+            <div class="package-card-lg {% if package.featured %}featured{% endif %} animate-fade-up" style="animation-delay: {{ loop.index * 0.15 }}s">
+                <div class="package-image">
+                    <img src="https://images.unsplash.com/photo-{{ ['1506905925346-21bda4d32df4', '1518548419970-58e3b4079ab2', '1559827260-dc66d52bef19', '1544551763-46a013bb70d5'][loop.index0 % 4] }}?w=800&h=500&fit=crop" alt="{{ package.name }}">
+                    {% if package.featured %}
+                    <div class="package-badge">Best Seller</div>
+                    {% endif %}
+                </div>
+                <div class="package-content">
+                    <div class="package-meta">
+                        <span class="package-duration">
+                            <i class="fas fa-clock"></i>
+                            {{ package.duration }}
+                        </span>
+                        <span class="package-rating">
+                            <i class="fas fa-star"></i>
+                            4.9
+                        </span>
+                    </div>
+                    <h3 class="package-title">{{ package.name }}</h3>
+                    <ul class="package-highlights">
+                        {% for highlight in package.highlights %}
+                        <li><i class="fas fa-check"></i> {{ highlight }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="original-price">${{ package.original_price }}</span>
+                            <span class="current-price">${{ package.price }}</span>
+                            <span class="price-note">per person</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">
+                            Book Now
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Custom Package CTA -->
+<section class="section custom-package">
+    <div class="container">
+        <div class="custom-package-card glass animate-fade-up">
+            <div class="custom-content">
+                <span class="section-tag">Custom Tours</span>
+                <h2>Looking for Something Special?</h2>
+                <p>Let us create a personalized travel experience tailored just for you. Tell us your preferences and we'll design the perfect itinerary.</p>
+            </div>
+            <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg">
+                Request Custom Package
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.page-header {
+    position: relative;
+    padding: 180px 0 100px;
+    text-align: center;
+    color: var(--light);
+}
+
+.page-header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1920&h=600&fit=crop') center/cover no-repeat;
+    z-index: -2;
+}
+
+.page-header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 15, 26, 0.85) 0%, rgba(15, 15, 26, 0.7) 100%);
+    z-index: -1;
+}
+
+.breadcrumb {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.page-desc {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.packages-grid-full {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.package-card-lg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    transition: var(--transition-normal);
+}
+
+.package-card-lg:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+}
+
+.package-card-lg.featured {
+    grid-column: span 2;
+}
+
+.package-card-lg .package-image {
+    position: relative;
+    height: 100%;
+    min-height: 350px;
+}
+
+.package-card-lg .package-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.package-card-lg .package-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: var(--light);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+}
+
+.package-card-lg .package-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.package-meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.package-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray-600);
+    font-size: 0.95rem;
+}
+
+.package-meta i {
+    color: var(--primary);
+}
+
+.package-card-lg .package-title {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.package-card-lg .package-highlights {
+    flex: 1;
+    margin-bottom: 25px;
+}
+
+.package-card-lg .package-highlights li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    color: var(--gray-600);
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.package-card-lg .package-highlights li:last-child {
+    border-bottom: none;
+}
+
+.package-card-lg .package-highlights li i {
+    color: #10B981;
+}
+
+.package-card-lg .package-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+}
+
+.custom-package {
+    padding-bottom: 100px;
+}
+
+.custom-package-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 60px;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+    border-radius: var(--radius-xl);
+}
+
+.custom-content {
+    max-width: 600px;
+}
+
+.custom-content .section-tag {
+    background: rgba(255, 107, 53, 0.2);
+}
+
+.custom-content h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--light);
+    margin-bottom: 15px;
+}
+
+.custom-content p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+}
+
+@media (max-width: 1200px) {
+    .packages-grid-full {
+        grid-template-columns: 1fr;
+    }
+    
+    .package-card-lg.featured {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 150px 0 80px;
+    }
+    
+    .package-card-lg {
+        grid-template-columns: 1fr;
+    }
+    
+    .package-card-lg .package-image {
+        min-height: 250px;
+    }
+    
+    .custom-package-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 30px;
+    }
+}
+</style>
+{% endblock %}

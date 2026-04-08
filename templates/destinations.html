@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block title %}Destinations - BromoRise{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="page-header-bg">
+        <div class="page-header-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="page-header-content">
+            <span class="breadcrumb">Home / Destinations</span>
+            <h1 class="page-title">Explore Destinations</h1>
+            <p class="page-desc">Discover breathtaking locations handpicked for unforgettable experiences</p>
+        </div>
+    </div>
+</section>
+
+<!-- Destinations Grid -->
+<section class="section destinations-page">
+    <div class="container">
+        <div class="destinations-grid">
+            {% for dest in destinations %}
+            <div class="destination-card-lg animate-fade-up" style="animation-delay: {{ loop.index * 0.1 }}s">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-{{ ['1506905925346-21bda4d32df4', '1537996194471-e657df975ab4', '1559827260-dc66d52bef19', '1544551763-46a013bb70d5', '1518548419970-58e3b4079ab2'][loop.index0 % 5] }}?w=600&h=400&fit=crop" alt="{{ dest.name }}">
+                    <div class="card-badge">
+                        <i class="fas fa-star"></i>
+                        <span>{{ dest.rating }}</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">{{ dest.name }}</h3>
+                    <p class="card-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ dest.location }}
+                    </p>
+                    <p class="card-desc">{{ dest.description }}</p>
+                    <div class="card-footer">
+                        <div class="card-price">
+                            <span>From</span>
+                            <strong>${{ dest.price }}</strong>
+                            <span>/ person</span>
+                        </div>
+                        <a href="{{ url_for('destination_detail', dest_id=dest.id) }}" class="btn btn-primary btn-sm">
+                            View Details
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section">
+    <div class="cta-bg">
+        <div class="cta-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="cta-content animate-fade-up">
+            <h2 class="cta-title">Can't Find What You're Looking For?</h2>
+            <p class="cta-text">
+                Contact our travel experts and we'll create a custom itinerary just for you.
+            </p>
+            <a href="{{ url_for('contact') }}" class="btn btn-primary btn-lg">
+                Contact Us
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.page-header {
+    position: relative;
+    padding: 180px 0 100px;
+    text-align: center;
+    color: var(--light);
+}
+
+.page-header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=600&fit=crop') center/cover no-repeat;
+    z-index: -2;
+}
+
+.page-header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 15, 26, 0.85) 0%, rgba(15, 15, 26, 0.7) 100%);
+    z-index: -1;
+}
+
+.breadcrumb {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.page-desc {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.destination-card-lg {
+    background: var(--light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: var(--transition-normal);
+}
+
+.destination-card-lg:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.destination-card-lg .card-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.destination-card-lg .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.destination-card-lg:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.destination-card-lg .card-content {
+    padding: 30px;
+}
+
+.destination-card-lg .card-desc {
+    color: var(--gray-600);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.destination-card-lg .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+}
+
+.destination-card-lg .card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    color: var(--gray-600);
+}
+
+.destination-card-lg .card-price strong {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 150px 0 80px;
+    }
+    
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

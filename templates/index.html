@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <div class="hero-overlay"></div>
+    </div>
+    
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1 class="hero-title animate-fade-up">
+                Unforgettable<br>
+                <span class="highlight">Mount Bromo</span><br>
+                Sunrise Experience
+            </h1>
+            <p class="hero-subtitle animate-fade-up delay-1">
+                Discover the magical beauty of Indonesia's most iconic volcanic landscape. 
+                Experience breathtaking sunrises and adventures that will last a lifetime.
+            </p>
+            <div class="hero-buttons animate-fade-up delay-2">
+                <a href="#booking" class="btn btn-primary">
+                    <span>Book Your Adventure</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#destinations" class="btn btn-outline">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Watch Video</span>
+                </a>
+            </div>
+            
+            <!-- Stats Badge -->
+            <div class="hero-stats animate-fade-up delay-3">
+                <div class="stat-avatars">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="User">
+                    <span class="more-users">+</span>
+                </div>
+                <div class="stat-text">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">People Joined</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Cards -->
+        <div class="hero-cards">
+            <div class="floating-card card-1 animate-float">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=400&fit=crop" alt="Mountain View">
+                <div class="card-overlay">
+                    <span class="card-location"><i class="fas fa-map-marker-alt"></i> Bromo</span>
+                </div>
+            </div>
+            <div class="floating-card card-2 animate-float delay-1">
+                <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=300&h=400&fit=crop" alt="Sunset View">
+                <div class="card-overlay">
+                    <span class="card-location"><i class="fas fa-map-marker-alt"></i> Bali</span>
+                </div>
+            </div>
+            <div class="floating-card card-3 animate-float delay-2">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=300&h=400&fit=crop" alt="Beach View">
+                <div class="card-overlay">
+                    <span class="card-location"><i class="fas fa-map-marker-alt"></i> Komodo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Info Glass Card -->
+    <div class="hero-info-card glass animate-slide-up">
+        <div class="info-item">
+            <i class="fas fa-calendar-check"></i>
+            <div>
+                <span class="info-label">Best Time</span>
+                <span class="info-value">April - October</span>
+            </div>
+        </div>
+        <div class="info-divider"></div>
+        <div class="info-item">
+            <i class="fas fa-thermometer-half"></i>
+            <div>
+                <span class="info-label">Temperature</span>
+                <span class="info-value">3°C - 20°C</span>
+            </div>
+        </div>
+        <div class="info-divider"></div>
+        <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+                <span class="info-label">Duration</span>
+                <span class="info-value">2 Days Trip</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+        <span>Scroll to explore</span>
+    </div>
+</section>
+
+<!-- Destinations Section -->
+<section class="section destinations" id="destinations">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag animate-fade-up">Popular Destinations</span>
+            <h2 class="section-title animate-fade-up delay-1">Explore Our Top Destinations</h2>
+            <p class="section-desc animate-fade-up delay-2">
+                Discover breathtaking locations handpicked for unforgettable experiences
+            </p>
+        </div>
+        
+        <div class="destinations-carousel">
+            <div class="carousel-track">
+                {% for dest in destinations %}
+                <div class="destination-card animate-fade-up" style="animation-delay: {{ loop.index * 0.1 }}s">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-{{ ['1506905925346-21bda4d32df4', '1537996194471-e657df975ab4', '1559827260-dc66d52bef19', '1544551763-46a013bb70d5', '1518548419970-58e3b4079ab2'][loop.index0 % 5] }}?w=400&h=500&fit=crop" alt="{{ dest.name }}">
+                        <div class="card-badge">
+                            <i class="fas fa-star"></i>
+                            <span>{{ dest.rating }}</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{ dest.name }}</h3>
+                        <p class="card-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ dest.location }}
+                        </p>
+                        <div class="card-footer">
+                            <span class="card-price">From <strong>${{ dest.price }}</strong></span>
+                            <a href="{{ url_for('destination_detail', dest_id=dest.id) }}" class="card-btn">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="carousel-nav">
+                <button class="carousel-btn prev" id="destPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" id="destNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Packages Section -->
+<section class="section packages" id="packages">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag animate-fade-up">Travel Packages</span>
+            <h2 class="section-title animate-fade-up delay-1">Our Best Packages</h2>
+            <p class="section-desc animate-fade-up delay-2">
+                Choose from our carefully curated travel packages for the ultimate experience
+            </p>
+        </div>
+        
+        <div class="packages-grid">
+            {% for package in packages %}
+            <div class="package-card {% if package.featured %}featured{% endif %} animate-fade-up" style="animation-delay: {{ loop.index * 0.15 }}s">
+                <div class="package-image">
+                    <img src="https://images.unsplash.com/photo-{{ ['1506905925346-21bda4d32df4', '1518548419970-58e3b4079ab2', '1559827260-dc66d52bef19', '1544551763-46a013bb70d5'][loop.index0 % 4] }}?w=600&h=400&fit=crop" alt="{{ package.name }}">
+                    {% if package.featured %}
+                    <div class="package-badge">Best Seller</div>
+                    {% endif %}
+                    <div class="package-overlay">
+                        <span class="package-duration">
+                            <i class="fas fa-clock"></i>
+                            {{ package.duration }}
+                        </span>
+                    </div>
+                </div>
+                <div class="package-content">
+                    <h3 class="package-title">{{ package.name }}</h3>
+                    <ul class="package-highlights">
+                        {% for highlight in package.highlights[:3] %}
+                        <li><i class="fas fa-check"></i> {{ highlight }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="package-footer">
+                        <div class="package-price">
+                            <span class="original-price">${{ package.original_price }}</span>
+                            <span class="current-price">${{ package.price }}</span>
+                            <span class="price-note">per person</span>
+                        </div>
+                        <a href="#booking" class="btn btn-primary btn-sm">
+                            Book Now
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="packages-cta animate-fade-up">
+            <a href="{{ url_for('packages') }}" class="btn btn-outline-dark">
+                View All Packages
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section how-it-works" id="how-it-works">
+    <div class="container">
+        <div class="hiw-grid">
+            <div class="hiw-image animate-fade-right">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=800&fit=crop" alt="Travel Experience">
+                <div class="hiw-image-badge glass">
+                    <i class="fas fa-award"></i>
+                    <span>Trusted by 10K+ Travelers</span>
+                </div>
+            </div>
+            
+            <div class="hiw-content">
+                <span class="section-tag animate-fade-up">How It Works</span>
+                <h2 class="section-title animate-fade-up delay-1">Simple Steps to Your Dream Vacation</h2>
+                
+                <div class="hiw-steps">
+                    <div class="hiw-step animate-fade-up delay-2">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h4>Choose Destination</h4>
+                            <p>Browse our curated destinations and find your perfect getaway</p>
+                        </div>
+                    </div>
+                    <div class="hiw-step animate-fade-up delay-3">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h4>Select Package</h4>
+                            <p>Pick a package that suits your preferences and budget</p>
+                        </div>
+                    </div>
+                    <div class="hiw-step animate-fade-up delay-4">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h4>Book & Pay</h4>
+                            <p>Secure your booking with easy and safe payment options</p>
+                        </div>
+                    </div>
+                    <div class="hiw-step animate-fade-up delay-5">
+                        <div class="step-number">04</div>
+                        <div class="step-content">
+                            <h4>Enjoy Your Trip</h4>
+                            <p>Pack your bags and get ready for an unforgettable adventure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="section testimonials" id="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag animate-fade-up">Testimonials</span>
+            <h2 class="section-title animate-fade-up delay-1">What Our Travelers Say</h2>
+            <p class="section-desc animate-fade-up delay-2">
+                Real experiences from real travelers who explored with us
+            </p>
+        </div>
+        
+        <div class="testimonials-slider">
+            <div class="testimonials-track" id="testimonialsTrack">
+                {% for testimonial in testimonials %}
+                <div class="testimonial-card animate-fade-up" style="animation-delay: {{ loop.index * 0.1 }}s">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/{{ ['women/44', 'men/32', 'women/68', 'men/75'][loop.index0 % 4] }}.jpg" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <h4>{{ testimonial.name }}</h4>
+                            <span>{{ testimonial.location }}</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        {% for i in range(testimonial.rating) %}
+                        <i class="fas fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="testimonial-text">"{{ testimonial.text }}"</p>
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="testimonials-nav">
+                <button class="carousel-btn prev" id="testPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonials-dots" id="testimonialsDots"></div>
+                <button class="carousel-btn next" id="testNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section" id="cta">
+    <div class="cta-bg">
+        <div class="cta-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="cta-content animate-fade-up">
+            <h2 class="cta-title">Ready for Your Next Adventure?</h2>
+            <p class="cta-text">
+                Join thousands of travelers who have discovered the beauty of Indonesia with us. 
+                Start planning your dream vacation today!
+            </p>
+            <div class="cta-buttons">
+                <a href="#booking" class="btn btn-primary btn-lg">
+                    Start Your Journey
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="{{ url_for('contact') }}" class="btn btn-outline-light btn-lg">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Section -->
+<section class="section booking-section" id="booking">
+    <div class="container">
+        <div class="booking-grid">
+            <div class="booking-info animate-fade-right">
+                <span class="section-tag">Book Now</span>
+                <h2 class="section-title">Start Your Adventure Today</h2>
+                <p class="booking-desc">
+                    Fill out the form and our travel experts will contact you within 24 hours 
+                    to finalize your booking and answer any questions.
+                </p>
+                
+                <div class="booking-features">
+                    <div class="booking-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Secure Booking</h4>
+                            <p>Your information is protected</p>
+                        </div>
+                    </div>
+                    <div class="booking-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-undo"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Free Cancellation</h4>
+                            <p>Cancel up to 48 hours before</p>
+                        </div>
+                    </div>
+                    <div class="booking-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>24/7 Support</h4>
+                            <p>We're always here to help</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="booking-form-wrapper animate-fade-left">
+                <form action="{{ url_for('book') }}" method="POST" class="booking-form glass">
+                    {{ booking_form.hidden_tag() }}
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            {{ booking_form.name(class="form-control", placeholder="Your full name") }}
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            {{ booking_form.email(class="form-control", placeholder="your@email.com") }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            {{ booking_form.phone(class="form-control", placeholder="+62 xxx xxxx xxxx") }}
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            {{ booking_form.destination(class="form-control") }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="travel_date">Travel Date</label>
+                            {{ booking_form.travel_date(class="form-control", type="date") }}
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Number of Guests</label>
+                            {{ booking_form.guests(class="form-control", placeholder="1", min="1", max="20") }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Special Requests (Optional)</label>
+                        {{ booking_form.message(class="form-control", placeholder="Any special requests or questions?", rows="3") }}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span>Submit Booking Request</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="section newsletter-section">
+    <div class="container">
+        <div class="newsletter-card glass animate-fade-up">
+            <div class="newsletter-content">
+                <h3>Subscribe to Our Newsletter</h3>
+                <p>Get exclusive travel deals, tips, and inspiration delivered to your inbox</p>
+            </div>
+            <form action="{{ url_for('newsletter') }}" method="POST" class="newsletter-form">
+                {{ newsletter_form.hidden_tag() }}
+                <div class="newsletter-input">
+                    {{ newsletter_form.email(class="form-control", placeholder="Enter your email") }}
+                    <button type="submit" class="btn btn-primary">
+                        Subscribe
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

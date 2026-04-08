@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ destination.name }} - BromoRise{% endblock %}
+
+{% block content %}
+<!-- Destination Hero -->
+<section class="dest-hero">
+    <div class="dest-hero-bg">
+        <div class="dest-hero-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="dest-hero-content">
+            <a href="{{ url_for('destinations') }}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Destinations
+            </a>
+            <div class="dest-rating">
+                <i class="fas fa-star"></i>
+                <span>{{ destination.rating }}</span>
+            </div>
+            <h1 class="dest-title">{{ destination.name }}</h1>
+            <p class="dest-location">
+                <i class="fas fa-map-marker-alt"></i>
+                {{ destination.location }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Destination Details -->
+<section class="section dest-details">
+    <div class="container">
+        <div class="dest-grid">
+            <div class="dest-info">
+                <div class="info-card glass-dark">
+                    <h2>About This Destination</h2>
+                    <p>{{ destination.description }}</p>
+                    <p>Experience the magic of {{ destination.name }} with our expertly curated tours. From breathtaking sunrises to local cultural experiences, every moment is designed to create lasting memories.</p>
+                    
+                    <h3>Highlights</h3>
+                    <ul class="highlight-list">
+                        <li><i class="fas fa-check"></i> Professional local guides</li>
+                        <li><i class="fas fa-check"></i> Comfortable transportation</li>
+                        <li><i class="fas fa-check"></i> All entrance fees included</li>
+                        <li><i class="fas fa-check"></i> Complimentary breakfast</li>
+                        <li><i class="fas fa-check"></i> Photography spots</li>
+                    </ul>
+                    
+                    <h3>What's Included</h3>
+                    <div class="included-grid">
+                        <div class="included-item">
+                            <i class="fas fa-hotel"></i>
+                            <span>Accommodation</span>
+                        </div>
+                        <div class="included-item">
+                            <i class="fas fa-utensils"></i>
+                            <span>Meals</span>
+                        </div>
+                        <div class="included-item">
+                            <i class="fas fa-car"></i>
+                            <span>Transport</span>
+                        </div>
+                        <div class="included-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Guide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dest-booking">
+                <div class="booking-card">
+                    <div class="booking-price">
+                        <span class="price-label">Starting from</span>
+                        <span class="price-amount">${{ destination.price }}</span>
+                        <span class="price-note">per person</span>
+                    </div>
+                    
+                    <form action="{{ url_for('book') }}" method="POST" class="quick-booking-form">
+                        {{ booking_form.hidden_tag() }}
+                        <input type="hidden" name="destination" value="{{ destination.id }}">
+                        
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            {{ booking_form.name(class="form-control", placeholder="Your name") }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email</label>
+                            {{ booking_form.email(class="form-control", placeholder="your@email.com") }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone</label>
+                            {{ booking_form.phone(class="form-control", placeholder="+62 xxx xxxx xxxx") }}
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Travel Date</label>
+                                {{ booking_form.travel_date(class="form-control", type="date") }}
+                            </div>
+                            <div class="form-group">
+                                <label>Guests</label>
+                                {{ booking_form.guests(class="form-control", placeholder="1", min="1", max="20") }}
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Book Now
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                    
+                    <div class="booking-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Free cancellation up to 48 hours before</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="section dest-gallery">
+    <div class="container">
+        <h2 class="section-title text-center">Photo Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item large">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="{{ destination.name }}">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&h=300&fit=crop" alt="{{ destination.name }}">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop" alt="{{ destination.name }}">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=400&h=300&fit=crop" alt="{{ destination.name }}">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.dest-hero {
+    position: relative;
+    padding: 200px 0 120px;
+    color: var(--light);
+}
+
+.dest-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=800&fit=crop') center/cover no-repeat;
+    z-index: -2;
+}
+
+.dest-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(15, 15, 26, 0.7), rgba(15, 15, 26, 0.9));
+    z-index: -1;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    transition: var(--transition-fast);
+}
+
+.back-link:hover {
+    color: var(--light);
+}
+
+.dest-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.dest-rating i {
+    color: #F59E0B;
+}
+
+.dest-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.dest-location {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dest-location i {
+    color: var(--primary);
+    margin-right: 8px;
+}
+
+.dest-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.info-card {
+    padding: 40px;
+    background: var(--light);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h2 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.info-card h3 {
+    font-size: 1.25rem;
+    margin: 30px 0 15px;
+    color: var(--dark);
+}
+
+.info-card p {
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.highlight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.highlight-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gray-700);
+}
+
+.highlight-list li i {
+    color: #10B981;
+}
+
+.included-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.included-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.included-item i {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.included-item span {
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+.booking-card {
+    position: sticky;
+    top: 120px;
+    padding: 30px;
+    background: var(--light);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.booking-price {
+    text-align: center;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.price-label {
+    display: block;
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.price-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.price-note {
+    display: block;
+    color: var(--gray-600);
+    font-size: 0.9rem;
+}
+
+.booking-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    font-size: 0.9rem;
+}
+
+.booking-note i {
+    color: #10B981;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 20px;
+}
+
+.gallery-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.gallery-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-slow);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+@media (max-width: 1024px) {
+    .dest-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-card {
+        position: static;
+    }
+    
+    .included-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dest-hero {
+        padding: 150px 0 80px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+    
+    .gallery-item.large {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+}
+</style>
+{% endblock %}
