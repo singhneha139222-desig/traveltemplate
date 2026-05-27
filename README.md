@@ -39,7 +39,7 @@ A modern, responsive travel booking website built with Flask (Python) and HTML/C
 
 1. **Clone or navigate to the project directory**
    ```bash
-   cd "c:\Users\rahul\Code\N\Travel Template"
+   cd "c:\Users\Code\Travel Template"
    ```
 
 2. **Create a virtual environment**
